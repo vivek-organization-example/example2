@@ -1,6 +1,6 @@
 import assert from 'node:assert';
-import { MongoClient, type Document } from 'mongodb';
-import { migrations } from '../../../shared/migrations';
+import { MongoClient } from 'mongodb';
+import { migrateDocument, migrations } from '../../../shared/migrations';
 
 const {
   MONGO_URL,
@@ -11,15 +11,15 @@ const {
   _LOG_FILE = 'normalizer.log'
 } = process.env;
 
-assert(MONGO_URL, 'MONGO_URL is required');
-assert(DATBASE_NAME, 'DATBASE_NAME is required');
-assert(SOURCE_COLLECTION, 'SOURCE_COLLECTION is required');
-assert(DESTINATION_COLLECTION, 'DESTINATION_COLLECTION is required');
-assert(Number(BATCH_SIZE), 'BATCH_SIZE must be a non-zero number');
-assert(Number.isInteger(Number(BATCH_SIZE)), 'BATCH_SIZE must be an integer');
-
 async function main() {
-  const versions = migrations.map(({ version }) => version);
+  assert(MONGO_URL, 'MONGO_URL is required');
+  assert(DATBASE_NAME, 'DATBASE_NAME is required');
+  assert(SOURCE_COLLECTION, 'SOURCE_COLLECTION is required');
+  assert(DESTINATION_COLLECTION, 'DESTINATION_COLLECTION is required');
+  assert(Number(BATCH_SIZE), 'BATCH_SIZE must be a non-zero number');
+  assert(Number.isInteger(Number(BATCH_SIZE)), 'BATCH_SIZE must be an integer');
+
+  const schemaVersions = migrations.map(({ schemaVersion }) => schemaVersion);
 
   const client = new MongoClient(MONGO_URL);
 
@@ -34,9 +34,12 @@ async function main() {
 
     const batch = [];
 
-    for (const version of versions) {
+    for (const schemaVersion of schemaVersions) {
       const cursor = sourceCollection.find({
-        $or: [{ version: { $lt: version } }, { version: undefined }]
+        $or: [
+          { schemaVersion: { $lt: schemaVersion } },
+          { schemaVersion: undefined }
+        ]
       });
 
       for await (const document of cursor) {
@@ -61,20 +64,4 @@ async function main() {
     // Graceful exit
     await client.close();
   }
-}
-
-function migrateDocument(document: Document) {
-  const startingVersion = document['version'] || 0;
-
-  let updatedDocument = document;
-  for (const migration of migrations) {
-    if (migration.version <= startingVersion) {
-      continue;
-    }
-
-    updatedDocument = migration.migrator(updatedDocument);
-    updatedDocument['version'] = migration.version;
-  }
-
-  return updatedDocument;
 }

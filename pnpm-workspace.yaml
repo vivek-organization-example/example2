@@ -14,3 +14,4 @@ packages:
   - 'tools/scripts/seed'
   - 'tools/scripts/seed-exams'
   - 'tools/scripts/migrate'
+  - 'tools/prisma-generator-schema'

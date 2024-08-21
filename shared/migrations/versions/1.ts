@@ -1,10 +1,13 @@
-import type { Document, ObjectId } from 'mongodb';
+import type { Document } from 'mongodb';
+import { user } from '../../config/prisma/version-1';
 
 /**
  * Main function used to migrate the document.
+ *
+ * First migrator is special in that it takes a generic `Document` type. The second+ migrators will expect the type of the document to be the same as the previous migrator's output.
  */
-export default function migrator(document: Document): User1 {
-  const updatedDocument = {} as User1;
+export default function migrator(document: Document): user {
+  const updatedDocument = {} as user;
 
   if (
     typeof document === 'object' &&
@@ -28,28 +31,3 @@ export default function migrator(document: Document): User1 {
 
   return updatedDocument;
 }
-
-export type User1 = {
-  _id: ObjectId;
-  completedChallenges: CompletedChallenge[];
-  completedChallengesNeedingModeration: number;
-};
-
-export type CompletedChallenge =
-  | {
-      id: string;
-      challengeType: number;
-      isManuallyApproved: boolean;
-      files: File[];
-    }
-  | {
-      id: string;
-      challengeType: number;
-    };
-
-export type File = {
-  name: string;
-  path: string;
-  key: number;
-  seed: string;
-};
