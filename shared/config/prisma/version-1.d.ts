@@ -3513,6 +3513,11 @@ export namespace Prisma {
       website: string | null
       yearsTopContributor: string[]
       isClassroomAccount: boolean | null
+      /**
+       * The record's last migrated version.
+       * 
+       * A version of `0` indicates that the record has never been migrated/normalized.
+       */
       schemaVersion: number
     }, ExtArgs["result"]["user"]>
     composites: {
