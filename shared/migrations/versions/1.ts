@@ -1,12 +1,12 @@
 import type { Document } from 'mongodb';
-import { user } from '../../config/prisma/version-1';
+import { Prisma, user } from '../../config/prisma/version-1';
 
 /**
  * Main function used to migrate the document.
  *
  * First migrator is special in that it takes a generic `Document` type. The second+ migrators will expect the type of the document to be the same as the previous migrator's output.
  */
-export default function migrator(document: Document): user {
+export function migrator(document: Document): user {
   const updatedDocument = {} as user;
 
   if (
@@ -23,8 +23,8 @@ export default function migrator(document: Document): user {
         const completedChallengesNeedingModeration = completedChallenges.filter(
           ({ isManuallyApproved }) => isManuallyApproved === false
         ).length;
-        updatedDocument.completedChallengesNeedingModeration =
-          completedChallengesNeedingModeration;
+        // updatedDocument.completedChallengesNeedingModeration =
+        //   completedChallengesNeedingModeration;
       }
     }
   }

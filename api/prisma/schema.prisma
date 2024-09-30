@@ -150,6 +150,8 @@ model user {
   ///
   /// A version of `0` indicates that the record has never been migrated/normalized.
   schemaVersion                Int                           @default(0)
+  /// The last time in milliseconds since epoch that the record was updated.
+  lastUpdatedAtInMS            Int?
 }
 
 // -----------------------------------

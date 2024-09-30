@@ -2758,12 +2758,14 @@ export namespace Prisma {
     rand: number | null
     updateCount: number | null
     schemaVersion: number | null
+    lastUpdatedAtInMS: number | null
   }
 
   export type UserSumAggregateOutputType = {
     rand: number | null
     updateCount: number | null
     schemaVersion: number | null
+    lastUpdatedAtInMS: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -2823,6 +2825,7 @@ export namespace Prisma {
     website: string | null
     isClassroomAccount: boolean | null
     schemaVersion: number | null
+    lastUpdatedAtInMS: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2882,6 +2885,7 @@ export namespace Prisma {
     website: string | null
     isClassroomAccount: boolean | null
     schemaVersion: number | null
+    lastUpdatedAtInMS: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2944,6 +2948,7 @@ export namespace Prisma {
     yearsTopContributor: number
     isClassroomAccount: number
     schemaVersion: number
+    lastUpdatedAtInMS: number
     _all: number
   }
 
@@ -2952,12 +2957,14 @@ export namespace Prisma {
     rand?: true
     updateCount?: true
     schemaVersion?: true
+    lastUpdatedAtInMS?: true
   }
 
   export type UserSumAggregateInputType = {
     rand?: true
     updateCount?: true
     schemaVersion?: true
+    lastUpdatedAtInMS?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -3017,6 +3024,7 @@ export namespace Prisma {
     website?: true
     isClassroomAccount?: true
     schemaVersion?: true
+    lastUpdatedAtInMS?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -3076,6 +3084,7 @@ export namespace Prisma {
     website?: true
     isClassroomAccount?: true
     schemaVersion?: true
+    lastUpdatedAtInMS?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -3138,6 +3147,7 @@ export namespace Prisma {
     yearsTopContributor?: true
     isClassroomAccount?: true
     schemaVersion?: true
+    lastUpdatedAtInMS?: true
     _all?: true
   }
 
@@ -3287,6 +3297,7 @@ export namespace Prisma {
     yearsTopContributor: string[]
     isClassroomAccount: boolean | null
     schemaVersion: number
+    lastUpdatedAtInMS: number | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -3374,6 +3385,7 @@ export namespace Prisma {
     yearsTopContributor?: boolean
     isClassroomAccount?: boolean
     schemaVersion?: boolean
+    lastUpdatedAtInMS?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectScalar = {
@@ -3436,6 +3448,7 @@ export namespace Prisma {
     yearsTopContributor?: boolean
     isClassroomAccount?: boolean
     schemaVersion?: boolean
+    lastUpdatedAtInMS?: boolean
   }
 
   export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3519,6 +3532,10 @@ export namespace Prisma {
        * A version of `0` indicates that the record has never been migrated/normalized.
        */
       schemaVersion: number
+      /**
+       * The last time in milliseconds since epoch that the record was updated.
+       */
+      lastUpdatedAtInMS: number | null
     }, ExtArgs["result"]["user"]>
     composites: {
       completedChallenges: Prisma.$CompletedChallengePayload[]
@@ -4006,6 +4023,7 @@ export namespace Prisma {
     readonly yearsTopContributor: FieldRef<"user", 'String[]'>
     readonly isClassroomAccount: FieldRef<"user", 'Boolean'>
     readonly schemaVersion: FieldRef<"user", 'Int'>
+    readonly lastUpdatedAtInMS: FieldRef<"user", 'Int'>
   }
     
 
@@ -13052,7 +13070,8 @@ export namespace Prisma {
     website: 'website',
     yearsTopContributor: 'yearsTopContributor',
     isClassroomAccount: 'isClassroomAccount',
-    schemaVersion: 'schemaVersion'
+    schemaVersion: 'schemaVersion',
+    lastUpdatedAtInMS: 'lastUpdatedAtInMS'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -13312,6 +13331,7 @@ export namespace Prisma {
     yearsTopContributor?: StringNullableListFilter<"user">
     isClassroomAccount?: BoolNullableFilter<"user"> | boolean | null
     schemaVersion?: IntFilter<"user"> | number
+    lastUpdatedAtInMS?: IntNullableFilter<"user"> | number | null
   }
 
   export type userOrderByWithRelationInput = {
@@ -13380,6 +13400,7 @@ export namespace Prisma {
     yearsTopContributor?: SortOrder
     isClassroomAccount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type userWhereUniqueInput = Prisma.AtLeast<{
@@ -13451,6 +13472,7 @@ export namespace Prisma {
     yearsTopContributor?: StringNullableListFilter<"user">
     isClassroomAccount?: BoolNullableFilter<"user"> | boolean | null
     schemaVersion?: IntFilter<"user"> | number
+    lastUpdatedAtInMS?: IntNullableFilter<"user"> | number | null
   }, "id">
 
   export type userOrderByWithAggregationInput = {
@@ -13513,6 +13535,7 @@ export namespace Prisma {
     yearsTopContributor?: SortOrder
     isClassroomAccount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
     _count?: userCountOrderByAggregateInput
     _avg?: userAvgOrderByAggregateInput
     _max?: userMaxOrderByAggregateInput
@@ -13583,6 +13606,7 @@ export namespace Prisma {
     yearsTopContributor?: StringNullableListFilter<"user">
     isClassroomAccount?: BoolNullableWithAggregatesFilter<"user"> | boolean | null
     schemaVersion?: IntWithAggregatesFilter<"user"> | number
+    lastUpdatedAtInMS?: IntNullableWithAggregatesFilter<"user"> | number | null
   }
 
   export type AccessTokenWhereInput = {
@@ -14108,6 +14132,7 @@ export namespace Prisma {
     yearsTopContributor?: userCreateyearsTopContributorInput | string[]
     isClassroomAccount?: boolean | null
     schemaVersion?: number
+    lastUpdatedAtInMS?: number | null
   }
 
   export type userUncheckedCreateInput = {
@@ -14176,6 +14201,7 @@ export namespace Prisma {
     yearsTopContributor?: userCreateyearsTopContributorInput | string[]
     isClassroomAccount?: boolean | null
     schemaVersion?: number
+    lastUpdatedAtInMS?: number | null
   }
 
   export type userUpdateInput = {
@@ -14243,6 +14269,7 @@ export namespace Prisma {
     yearsTopContributor?: userUpdateyearsTopContributorInput | string[]
     isClassroomAccount?: NullableBoolFieldUpdateOperationsInput | boolean | null
     schemaVersion?: IntFieldUpdateOperationsInput | number
+    lastUpdatedAtInMS?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type userUncheckedUpdateInput = {
@@ -14310,6 +14337,7 @@ export namespace Prisma {
     yearsTopContributor?: userUpdateyearsTopContributorInput | string[]
     isClassroomAccount?: NullableBoolFieldUpdateOperationsInput | boolean | null
     schemaVersion?: IntFieldUpdateOperationsInput | number
+    lastUpdatedAtInMS?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type userCreateManyInput = {
@@ -14378,6 +14406,7 @@ export namespace Prisma {
     yearsTopContributor?: userCreateyearsTopContributorInput | string[]
     isClassroomAccount?: boolean | null
     schemaVersion?: number
+    lastUpdatedAtInMS?: number | null
   }
 
   export type userUpdateManyMutationInput = {
@@ -14445,6 +14474,7 @@ export namespace Prisma {
     yearsTopContributor?: userUpdateyearsTopContributorInput | string[]
     isClassroomAccount?: NullableBoolFieldUpdateOperationsInput | boolean | null
     schemaVersion?: IntFieldUpdateOperationsInput | number
+    lastUpdatedAtInMS?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type userUncheckedUpdateManyInput = {
@@ -14512,6 +14542,7 @@ export namespace Prisma {
     yearsTopContributor?: userUpdateyearsTopContributorInput | string[]
     isClassroomAccount?: NullableBoolFieldUpdateOperationsInput | boolean | null
     schemaVersion?: IntFieldUpdateOperationsInput | number
+    lastUpdatedAtInMS?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type AccessTokenCreateInput = {
@@ -15265,12 +15296,14 @@ export namespace Prisma {
     yearsTopContributor?: SortOrder
     isClassroomAccount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type userAvgOrderByAggregateInput = {
     rand?: SortOrder
     updateCount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type userMaxOrderByAggregateInput = {
@@ -15330,6 +15363,7 @@ export namespace Prisma {
     website?: SortOrder
     isClassroomAccount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type userMinOrderByAggregateInput = {
@@ -15389,12 +15423,14 @@ export namespace Prisma {
     website?: SortOrder
     isClassroomAccount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type userSumOrderByAggregateInput = {
     rand?: SortOrder
     updateCount?: SortOrder
     schemaVersion?: SortOrder
+    lastUpdatedAtInMS?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
