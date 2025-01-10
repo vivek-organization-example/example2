@@ -35,6 +35,7 @@ import { SceneSubject } from '../components/scene/scene-subject';
 // Styles
 import './show.css';
 import '../video.css';
+import { shuffleArray } from '../../../../../shared/utils/shuffle-array';
 
 // Redux Setup
 const mapStateToProps = (state: unknown) => ({
@@ -143,6 +144,32 @@ const ShowGeneric = ({
   };
 
   // multiple choice questions
+  const [initialQuestionData] = useState<
+    {
+      question: string;
+      answers: { answer: string; value: number; feedback: string | null }[];
+      correctAnswer: number;
+    }[]
+  >(
+    questions.map(question => {
+      const distractors = question.distractors.map((distractor, id) => ({
+        ...distractor,
+        value: id
+      }));
+      return {
+        question: question.text,
+        answers: shuffleArray([
+          ...distractors,
+          {
+            answer: question.answer,
+            value: distractors.length,
+            feedback: null
+          }
+        ]),
+        correctAnswer: distractors.length
+      };
+    })
+  );
   const [selectedMcqOptions, setSelectedMcqOptions] = useState(
     questions.map<number | null>(() => null)
   );
@@ -156,19 +183,19 @@ const ShowGeneric = ({
 
   const handleMcqOptionChange = (
     questionIndex: number,
-    answerIndex: number
+    value: number
   ): void => {
     setSelectedMcqOptions(prev =>
-      prev.map((option, index) =>
-        index === questionIndex ? answerIndex : option
-      )
+      prev.map((option, index) => (index === questionIndex ? value : option))
     );
   };
 
   const handleSubmit = () => {
     const hasCompletedAssignments =
       assignments.length === 0 || allAssignmentsCompleted;
-    const mcqSolutions = questions.map(question => question.solution - 1);
+    const mcqSolutions = initialQuestionData.map(
+      question => question.correctAnswer
+    );
     const mcqCorrect = isEqual(mcqSolutions, selectedMcqOptions);
 
     setSubmittedMcqAnswers(selectedMcqOptions);
@@ -259,7 +286,7 @@ const ShowGeneric = ({
 
               {questions.length > 0 && (
                 <MultipleChoiceQuestions
-                  questions={questions}
+                  questions={initialQuestionData}
                   selectedOptions={selectedMcqOptions}
                   handleOptionChange={handleMcqOptionChange}
                   submittedMcqAnswers={submittedMcqAnswers}
@@ -327,11 +354,11 @@ export const query = graphql`
         }
         questions {
           text
-          answers {
+          distractors {
             answer
             feedback
           }
-          solution
+          answer
         }
         scene {
           setup {

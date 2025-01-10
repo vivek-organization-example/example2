@@ -2,14 +2,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Spacer } from '@freecodecamp/ui';
-import { Question } from '../../../redux/prop-types';
+// import { Question } from '../../../redux/prop-types';
 import ChallengeHeading from './challenge-heading';
 import PrismFormatted from './prism-formatted';
 
 type MultipleChoiceQuestionsProps = {
-  questions: Question[];
+  questions: {
+    question: string;
+    answers: { answer: string; value: number; feedback: string | null }[];
+    correctAnswer: number;
+  }[];
   selectedOptions: (number | null)[];
-  handleOptionChange: (questionIndex: number, answerIndex: number) => void;
+  handleOptionChange: (questionIndex: number, value: number) => void;
   submittedMcqAnswers: (number | null)[];
   showFeedback: boolean;
 };
@@ -36,39 +40,36 @@ function MultipleChoiceQuestions({
       />
       {questions.map((question, questionIndex) => (
         <div key={questionIndex}>
-          <PrismFormatted className={'line-numbers'} text={question.text} />
+          <PrismFormatted className={'line-numbers'} text={question.question} />
           <div className='video-quiz-options'>
-            {question.answers.map(({ answer }, answerIndex) => {
+            {question.answers.map(({ answer, value, feedback }) => {
               const isSubmittedAnswer =
-                submittedMcqAnswers[questionIndex] === answerIndex;
-              const feedback =
-                questions[questionIndex].answers[answerIndex].feedback;
+                submittedMcqAnswers[questionIndex] === value;
+
               const isCorrect =
                 submittedMcqAnswers[questionIndex] ===
                 // -1 because the solution is 1-indexed
-                questions[questionIndex].solution - 1;
+                questions[questionIndex].correctAnswer;
 
               return (
-                <React.Fragment key={answerIndex}>
+                <React.Fragment key={value}>
                   <label
-                    className={`video-quiz-option-label 
-                      ${showFeedback && isSubmittedAnswer ? 'mcq-hide-border' : ''} 
+                    className={`video-quiz-option-label
+                      ${showFeedback && isSubmittedAnswer ? 'mcq-hide-border' : ''}
                       ${showFeedback && isSubmittedAnswer ? (isCorrect ? 'mcq-correct-border' : 'mcq-incorrect-border') : ''}`}
-                    htmlFor={`mc-question-${questionIndex}-answer-${answerIndex}`}
+                    htmlFor={`mc-question-${questionIndex}-answer-${value}`}
                   >
                     <input
                       name='quiz'
-                      checked={selectedOptions[questionIndex] === answerIndex}
+                      checked={selectedOptions[questionIndex] === value}
                       className='sr-only'
-                      onChange={() =>
-                        handleOptionChange(questionIndex, answerIndex)
-                      }
+                      onChange={() => handleOptionChange(questionIndex, value)}
                       type='radio'
-                      value={answerIndex}
-                      id={`mc-question-${questionIndex}-answer-${answerIndex}`}
+                      value={value}
+                      id={`mc-question-${questionIndex}-answer-${value}`}
                     />{' '}
                     <span className='video-quiz-input-visible'>
-                      {selectedOptions[questionIndex] === answerIndex ? (
+                      {selectedOptions[questionIndex] === value ? (
                         <span className='video-quiz-selected-input' />
                       ) : null}
                     </span>
