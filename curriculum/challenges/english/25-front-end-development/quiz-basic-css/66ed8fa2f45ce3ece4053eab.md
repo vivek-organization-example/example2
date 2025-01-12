@@ -435,21 +435,21 @@ Which rule applies `24px` padding to the top and bottom?
 
 #### --text--
 
-What does the `line-height` property do?
+What is the purpose of a `universal selector (*)` in CSS?
 
 #### --distractors--
 
-Controls the size of the font.
+It selects only block-level elements in a document.
 
 ---
 
-Controls the responsiveness of text.
+It resets all margins to default values.
 
 ---
 
-Controls how much space is between the letters of text.
+It applies styles only to elements with an ID.
 
 #### --answer--
 
-Controls how much space is between the lines of text.
+It matches all elements in a document and applies specified styles.
 
